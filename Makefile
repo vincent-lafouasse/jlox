@@ -5,6 +5,6 @@ jlox: generate_ast
 
 generate_ast:
 	@make -f $(JAVA_MAKEFILE) PACKAGE=tool
-	@java -cp build com.poss.tool.GenerateAST com/poss/lox
+	@java -cp build com.poss.tool.GenerateAst com/poss/lox
 
 .PHONY: jlox
