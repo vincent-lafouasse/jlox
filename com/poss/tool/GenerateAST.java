@@ -68,6 +68,14 @@ class GenerateAST {
 
 		writer.println("\t\t}");
 
+		// Visitor pattern.
+		writer.println();
+		writer.println("\t\t@Override");
+		writer.println("\t\t<R> R accept(Visitor<R> visitor) {");
+		writer.println("\t\t\treturn visitor.visit" +
+			className + baseName + "(this);");
+		writer.println("\t\t}");
+
 		// Fields.
 		writer.println();
 		for (String field : fields) {
