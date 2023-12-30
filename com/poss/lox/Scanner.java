@@ -12,6 +12,28 @@ class Scanner {
 	private int current = 0;
 	private int line = 1;
 
+	private static final Map<String, TokenType> keywords;
+
+	static {
+		keywords = new HashMap<>();
+		keywords.put("and",    TokenType.AND);
+		keywords.put("class",  TokenType.CLASS);
+		keywords.put("else",   TokenType.ELSE);
+		keywords.put("false",  TokenType.FALSE);
+		keywords.put("for",    TokenType.FOR);
+		keywords.put("fun",    TokenType.FUN);
+		keywords.put("if",     TokenType.IF);
+		keywords.put("nil",    TokenType.NIL);
+		keywords.put("or",     TokenType.OR);
+		keywords.put("print",  TokenType.PRINT);
+		keywords.put("return", TokenType.RETURN);
+		keywords.put("super",  TokenType.SUPER);
+		keywords.put("this",   TokenType.THIS);
+		keywords.put("true",   TokenType.TRUE);
+		keywords.put("var",    TokenType.VAR);
+		keywords.put("while",  TokenType.WHILE);
+	}
+
 	Scanner(String source) {
 		this.source = source;
 	}
@@ -84,6 +106,8 @@ class Scanner {
 			default:
 				if (isDigit(c)) {
 					scanNumber();
+				} else if (isAlpha(c)) {
+					scanIdentifier();
 				} else {
 					Lox.error(line, "Unexpected character.");
 				}
@@ -119,6 +143,16 @@ class Scanner {
 			TokenType.NUMBER,
 			Double.parseDouble(source.substring(start, current))
 		);
+	}
+
+	private void scanIdentifier() {
+		while (isAlnum(peek())) advance();
+
+		String lexeme = source.substring(start, current);
+		TokenType type = keywords.get(lexeme);
+		if (type == null)
+			type = TokenType.IDENTIFIER;
+		addToken(type);
 	}
 
 	private void addToken(TokenType type) {
