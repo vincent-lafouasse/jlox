@@ -44,7 +44,7 @@ class GenerateAST {
 
 		// The base accept() method.
 		writer.println();
-		writer.println("  abstract <R> R accept(Visitor<R> visitor);");
+		writer.println("\tabstract <R> R accept(Visitor<R> visitor);");
 
 		writer.println("}");
 		writer.close();
