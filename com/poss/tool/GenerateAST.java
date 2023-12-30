@@ -33,14 +33,18 @@ class GenerateAST {
 		writer.println();
 		writer.println("abstract class " + baseName + " {");
 
+		defineVisitor(writer, baseName, types);
+		writer.println();
+
 		for (String type: types) {
 			String className = type.split(":")[0].trim();
 			String fields = type.split(":")[1].trim();
 			defineType(writer, baseName, className, fields);
 		}
-		writer.println();
 
-		defineVisitor(writer, baseName, types);
+		// The base accept() method.
+		writer.println();
+		writer.println("  abstract <R> R accept(Visitor<R> visitor);");
 
 		writer.println("}");
 		writer.close();
