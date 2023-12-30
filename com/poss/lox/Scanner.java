@@ -87,7 +87,21 @@ class Scanner {
 	}
 
 	private void scanString() {
+		while (peek() != '"' && !isAtEnd()) {
+			if (peek() == '\n') line++;
+			advance();
+		}
 
+		if (isAtEnd()) {
+			Lox.error(line, "Unterminated string.");
+			return ;
+		}
+
+		// go past closing quote
+		advance();
+
+		String value = source.substring(start + 1, current - 1);
+		addToken(TokenType.STRING, value);
 	}
 
 	private void addToken(TokenType type) {
@@ -117,5 +131,25 @@ class Scanner {
 
 	private boolean isAtEnd() {
 		return current >= source.length();
+	}
+
+	private boolean isDigit(char c) {
+		return c >= '0' && c <= '9';
+	}
+
+	private boolean isUpper(char c) {
+		return c >= 'A' && c <= 'Z';
+	}
+
+	private boolean isLower(char c) {
+		return c >= 'a' && c <= 'z';
+	}
+
+	private boolean isAlpha(char c) {
+		return isLower(c) || isUpper(c) || c == '_';
+	}
+
+	private boolean isAlnum(char c) {
+		return isAlpha(c) || isDigit(c);
 	}
 }
