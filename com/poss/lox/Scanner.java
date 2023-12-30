@@ -30,6 +30,7 @@ class Scanner {
 		char c = advance();
 
 		switch (c) {
+			// scan single char tokens
 			case '(': addToken(TokenType.LEFT_PAREN); break;
 			case ')': addToken(TokenType.RIGHT_PAREN); break;
 			case '{': addToken(TokenType.LEFT_BRACE); break;
@@ -41,6 +42,7 @@ class Scanner {
 			case ';': addToken(TokenType.SEMICOLON); break;
 			case '*': addToken(TokenType.STAR); break;
 
+			// scan double char tokens
 			case '!':
 				addToken(match('=') ? TokenType.BANG_EQUAL
 									: TokenType.BANG);
@@ -58,6 +60,7 @@ class Scanner {
 									: TokenType.GREATER);
 				break;
 
+			// ignore comments
 			case '/':
 				if (match('/')) {
 					while (peek() != '\n' && !isAtEnd())
@@ -67,6 +70,7 @@ class Scanner {
 				}
 				break;
 
+			// ignore whitespace
 			case ' ':
 			case '\r':
 			case '\t':
@@ -75,9 +79,15 @@ class Scanner {
 				line++;
 				break;
 
+			case '"': scanString(); break;
+
 			default:
 				Lox.error(line, "Unexpected character.");
 		}
+	}
+
+	private void scanString() {
+
 	}
 
 	private void addToken(TokenType type) {
