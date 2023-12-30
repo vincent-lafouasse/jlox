@@ -12,6 +12,7 @@ abstract class Expr {
 		final Expr left;
 		final Token operator;
 	}
+
 	static class Grouping extends Expr {
 		Grouping(Expr left, Token operator) {
 			this.left = left;
@@ -21,6 +22,7 @@ abstract class Expr {
 		final Expr left;
 		final Token operator;
 	}
+
 	static class Literal extends Expr {
 		Literal(Expr left, Token operator) {
 			this.left = left;
@@ -30,6 +32,7 @@ abstract class Expr {
 		final Expr left;
 		final Token operator;
 	}
+
 	static class Unary extends Expr {
 		Unary(Expr left, Token operator) {
 			this.left = left;
@@ -38,5 +41,13 @@ abstract class Expr {
 
 		final Expr left;
 		final Token operator;
+	}
+
+
+	interface Visitor<R> {
+		R visitBinaryExpr(Binary expr);
+		R visitGroupingExpr(Grouping expr);
+		R visitLiteralExpr(Literal expr);
+		R visitUnaryExpr(Unary expr);
 	}
 }

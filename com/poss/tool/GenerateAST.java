@@ -38,6 +38,9 @@ class GenerateAST {
 			String fields = type.split(":")[1].trim();
 			defineType(writer, baseName, className, fields);
 		}
+		writer.println();
+
+		defineVisitor(writer, baseName, types);
 
 		writer.println("}");
 		writer.close();
@@ -65,6 +68,20 @@ class GenerateAST {
 		writer.println();
 		for (String field : fields) {
 			writer.println("\t\tfinal " + field + ";");
+		}
+
+		writer.println("\t}");
+		writer.println();
+	}
+
+	private static void defineVisitor(
+		PrintWriter writer, String baseName, List<String> types) {
+		writer.println("\tinterface Visitor<R> {");
+
+		for (String type : types) {
+			String typeName = type.split(":")[0].trim();
+			writer.println("\t\tR visit" + typeName + baseName + "(" +
+				typeName + " " + baseName.toLowerCase() + ");");
 		}
 
 		writer.println("\t}");
