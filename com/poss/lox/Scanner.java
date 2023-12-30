@@ -113,6 +113,8 @@ class Scanner {
 
 		if (peek() == '.' && isDigit(peekNext())) advance();
 
+		while (isDigit(peek())) advance();
+
 		addToken(
 			TokenType.NUMBER,
 			Double.parseDouble(source.substring(start, current))
