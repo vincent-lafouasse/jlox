@@ -43,30 +43,30 @@ class GenerateAST {
 		writer.close();
 	}
 
-	  private static void defineType(
-      PrintWriter writer, String baseName,
-      String className, String fieldList) {
-    writer.println("  static class " + className + " extends " +
-        baseName + " {");
+	private static void defineType(
+		PrintWriter writer, String baseName,
+		String className, String fieldList) {
+		writer.println("\tstatic class " + className + " extends " +
+			baseName + " {");
 
-    // Constructor.
-    writer.println("    " + className + "(" + fieldList + ") {");
+		// Constructor.
+		writer.println("\t\t" + className + "(" + fieldList + ") {");
 
-    // Store parameters in fields.
-    String[] fields = fieldList.split(", ");
-    for (String field : fields) {
-      String name = field.split(" ")[1];
-      writer.println("      this." + name + " = " + name + ";");
-    }
+		// Store parameters in fields.
+		String[] fields = fieldList.split(", ");
+		for (String field : fields) {
+			String name = field.split(" ")[1];
+			writer.println("\t\t\tthis." + name + " = " + name + ";");
+		}
 
-    writer.println("    }");
+		writer.println("\t\t}");
 
-    // Fields.
-    writer.println();
-    for (String field : fields) {
-      writer.println("    final " + field + ";");
-    }
+		// Fields.
+		writer.println();
+		for (String field : fields) {
+			writer.println("\t\tfinal " + field + ";");
+		}
 
-    writer.println("  }");
-  }
+		writer.println("\t}");
+	}
 }
