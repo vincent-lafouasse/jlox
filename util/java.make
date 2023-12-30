@@ -14,6 +14,6 @@ default: $(CLASSES)
 $(BUILD_DIR)/%.class: %.java
 	@ mkdir -p $(BUILD_DIR)
 	@ javac -cp . -d $(BUILD_DIR) $(JAVA_OPTIONS) -implicit:none $<
-	@ printf "%8s %-60s %s\n" javac $< "$(JAVA_OPTIONS)"
+	@ printf "%8s %-40s %s\n" javac $< "$(JAVA_OPTIONS)"
 
 .PHONY: default
